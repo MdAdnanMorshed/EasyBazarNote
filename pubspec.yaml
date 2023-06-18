@@ -1,0 +1,34 @@
+name: newspaper_app
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  http:
+  firebase_auth: ^4.6.1
+  firebase_core: ^2.13.0
+  shared_preferences: ^2.1.1
+  sqflite: ^2.2.8+4
+  path_provider: ^2.0.15
+  shimmer: ^2.0.0
+  cloud_firestore: ^4.7.1
+  progress_dialog_null_safe: ^1.0.7
+  internet_connection_checker: ^1.0.0+1
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+  assets:
+    - assets/
+
+
