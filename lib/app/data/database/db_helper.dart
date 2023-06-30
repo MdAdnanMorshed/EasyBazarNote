@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart';
@@ -131,6 +132,7 @@ class DatabaseHelper {
   ///----------------- Item  CRUD -------------------
 
   Future<int> itemInsert(Map<String, dynamic> row) async {
+    //print('DatabaseHelper.itemInsert ${jsonEncode(row)}');
     Database? db = await instance.database;
     return await db!.insert(itemTB, row);
   }
