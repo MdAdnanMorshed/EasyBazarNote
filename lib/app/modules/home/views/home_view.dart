@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:newspaper_app/app/data/models/is_item_model.dart';
 import 'package:newspaper_app/app/data/models/item_model.dart';
 import 'package:newspaper_app/app/data/models/newspaper_model.dart';
 import 'package:newspaper_app/app/data/utils/app_space.dart';
@@ -46,17 +47,16 @@ class HomeView extends GetView<HomeController> {
             return Center(
               child: ShimmerLoading.vListViewLoading(),
             );
-          }
-          else {
+          } else {
             if (controller.dummyData.isEmpty) {
               return const Center(child: Text('No Data Found!'));
             } else {
               return ListView.builder(
-                itemCount: controller.dummyData.length,
+                itemCount: controller.item.length,
                 itemBuilder: (BuildContext context, int index) {
-                  ItemModel data = controller.dummyData[index];
-                  return
-                    _newsCardWidget(data);
+                  ItemModel data = controller.item[index];
+                  print('data>>>111?? ${data.toJson()}');
+                  return _bazarCardWidget(data, index);
                 },
               );
             }
@@ -64,7 +64,8 @@ class HomeView extends GetView<HomeController> {
         }));
   }
 
-  _newsCardWidget(ItemModel data) {
+  _bazarCardWidget(ItemModel data, int index) {
+    print('data $data');
     return InkWell(
       onTap: () {
         Get.toNamed(Routes.NEWS_DETAILS, arguments: data);
@@ -72,7 +73,7 @@ class HomeView extends GetView<HomeController> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         margin: const EdgeInsets.only(left: 10, right: 10, top: 8),
-        height: Get.size.width / 3.2,
+        height: Get.size.width / 4.2,
         width: Get.size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -81,9 +82,7 @@ class HomeView extends GetView<HomeController> {
         child: Row(
           children: [
             Expanded(
-
               child: Container(
-                
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
                 margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 1),
                 height: Get.size.height / 6.5,
@@ -95,13 +94,13 @@ class HomeView extends GetView<HomeController> {
                 child: Hero(
                   tag: data.itemName.toString(),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child:  Image.asset(
-                      'assets/no_image.png',
-                      fit: BoxFit.fill,
-                      filterQuality: FilterQuality.high,
-                    )
-                   /* Image.network(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/no_image.png',
+                        fit: BoxFit.fill,
+                        filterQuality: FilterQuality.high,
+                      )
+                      /* Image.network(
                      '',
                       fit: BoxFit.fill,
                       filterQuality: FilterQuality.high,
@@ -114,7 +113,7 @@ class HomeView extends GetView<HomeController> {
                         );
                       },
                     ),*/
-                  ),
+                      ),
                 ),
               ),
             ),
@@ -127,10 +126,9 @@ class HomeView extends GetView<HomeController> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     AppSpace.spaceH4,
                     Text(
-                      data.itemName ?? '',
+                      data.updatePerson.toString() ?? '',
                       maxLines: 2,
                       overflow: TextOverflow.clip,
                       style: const TextStyle(fontWeight: FontWeight.w400),
@@ -160,16 +158,24 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            Expanded(
+            Obx(
+              () => Expanded(
+                child: CheckboxListTile(
+                  title: const Text(''),
+                  value: false,
+                  onChanged: (bool? value) {
+                   // controller.dummyData1[index]=value;
+                    controller.isItem.value=value!;
 
-              child:
-             CheckboxListTile(
-               title: Text(''), value: false, onChanged: (bool? value) {  },)
+                    print('value $value');
+                    //print('data.isItem ${data.isItem}');
+                  },
+                ),
+              ),
             )
           ],
         ),
       ),
     );
   }
-
 }

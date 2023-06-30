@@ -8,6 +8,7 @@ import '../controllers/bazar_item_controller.dart';
 
 class BazarItemView extends GetView<BazarItemController> {
   const BazarItemView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -260,6 +261,7 @@ class BazarItemView extends GetView<BazarItemController> {
           ),
         ),
       ),
+
     );
   }
 }

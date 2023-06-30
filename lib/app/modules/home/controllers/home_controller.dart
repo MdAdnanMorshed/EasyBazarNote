@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:newspaper_app/app/data/models/is_item_model.dart';
 import 'package:newspaper_app/app/data/models/newspaper_model.dart';
 import 'package:newspaper_app/app/data/repositories/news_repo.dart';
 import 'package:newspaper_app/app/data/utils/shimmer_effect.dart';
@@ -15,8 +16,14 @@ class HomeController extends GetxController {
  // List dummyData = [].obs;
 
   List<NewsPaperModel> newsDataList = [];
-  List<ItemModel> dummyData = [];
+  List<IsItemModel> dummyData = [];
+  List<ItemModel> item = [];
+
+
   final isLoadingData = false.obs;
+
+  List dummyData1  = [false,true,false].obs;
+  final isItem = false.obs;
 
   @override
   void onInit() {
@@ -54,17 +61,14 @@ class HomeController extends GetxController {
 
   getAllDataList() async{
     await DatabaseHelper.instance.itemGetData().then((value) {
-
+      print('Value :: ${value.toString()}');
 
       for(var data in value){
-         dummyData.add(ItemModel.fromJson(data));
+        item.add(ItemModel.fromJson(data));
+        // dummyData.add(IsItemModel.fromJson(data));
       }
-
-      //dummyData=value;
       isLoadingData.value = true;
-      print('HomeController.getAllDataList lng ${dummyData.length}');
-      print('HomeController.getAllDataList ${dummyData.toString()}');
-    });
 
+    });
   }
 }
