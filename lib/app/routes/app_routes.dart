@@ -8,6 +8,8 @@ abstract class Routes {
   static const AUTHENTICATION = _Paths.AUTHENTICATION;
   static const BOOKMARKSLIST = _Paths.BOOKMARKSLIST;
   static const CATEGORY = _Paths.CATEGORY;
+  static const SUB_CATEGORY = _Paths.SUB_CATEGORY;
+  static const BAZAR_ITEM = _Paths.BAZAR_ITEM;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const AUTHENTICATION = '/authentication';
   static const BOOKMARKSLIST = '/bookmarkslist';
   static const CATEGORY = '/category';
+  static const SUB_CATEGORY = '/sub-category';
+  static const BAZAR_ITEM = '/bazar-item';
 }

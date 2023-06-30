@@ -14,7 +14,8 @@ class AuthenticationView extends GetView<AuthenticationController> {
         title: Text('Authentication '),
         centerTitle: true,
       ),
-      body: Center(
+      body:
+      Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

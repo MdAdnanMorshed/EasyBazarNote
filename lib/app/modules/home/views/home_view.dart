@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:newspaper_app/app/data/models/item_model.dart';
 import 'package:newspaper_app/app/data/models/newspaper_model.dart';
 import 'package:newspaper_app/app/data/utils/app_space.dart';
 import 'package:newspaper_app/app/data/utils/dbhelper.dart';
@@ -16,7 +17,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
         backgroundColor: Colors.white.withOpacity(0.9),
         appBar: AppBar(
-          title: const Text('News Paper'),
+          title: const Text('Easy Bazar note App'),
           centerTitle: true,
           actions: [
             InkWell(
@@ -29,11 +30,11 @@ class HomeView extends GetView<HomeController> {
             AppSpace.spaceW12,
             InkWell(
               onTap: () {
-                Get.toNamed(Routes.BOOKMARKSLIST);
+                Get.toNamed(Routes.BAZAR_ITEM);
               },
               child: const Icon(
-                Icons.bookmark,
-                color: Colors.orange,
+                Icons.add,
+                color: Colors.green,
                 size: 25,
               ),
             ),
@@ -47,14 +48,15 @@ class HomeView extends GetView<HomeController> {
             );
           }
           else {
-            if (controller.newsDataList.isEmpty) {
+            if (controller.dummyData.isEmpty) {
               return const Center(child: Text('No Data Found!'));
             } else {
               return ListView.builder(
-                itemCount: controller.newsDataList.length,
+                itemCount: controller.dummyData.length,
                 itemBuilder: (BuildContext context, int index) {
-                  NewsPaperModel data = controller.newsDataList[index];
-                  return _newsCardWidget(data);
+                  ItemModel data = controller.dummyData[index];
+                  return
+                    _newsCardWidget(data);
                 },
               );
             }
@@ -62,7 +64,7 @@ class HomeView extends GetView<HomeController> {
         }));
   }
 
-  _newsCardWidget(NewsPaperModel data) {
+  _newsCardWidget(ItemModel data) {
     return InkWell(
       onTap: () {
         Get.toNamed(Routes.NEWS_DETAILS, arguments: data);
@@ -70,78 +72,104 @@ class HomeView extends GetView<HomeController> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         margin: const EdgeInsets.only(left: 10, right: 10, top: 8),
-        height: Get.size.height / 3.8,
+        height: Get.size.width / 3.2,
         width: Get.size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Colors.white.withOpacity(0.9),
         ),
-        child: Column(
+        child: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
-              margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-              height: Get.size.height / 6.5,
-              width: Get.size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey.withOpacity(0.7),
-              ),
-              child: Hero(
-                tag: data.title.toString(),
-                child: ClipRRect(
+            Expanded(
+
+              child: Container(
+                
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+                height: Get.size.height / 6.5,
+                width: Get.size.width,
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    data.urlToImage ?? '',
-                    fit: BoxFit.fill,
-                    filterQuality: FilterQuality.high,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Image.asset(
-                        'assets/no_image.png',
-                        fit: BoxFit.fill,
-                      );
-                    },
+                  color: Colors.grey.withOpacity(0.7),
+                ),
+                child: Hero(
+                  tag: data.itemName.toString(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child:  Image.asset(
+                      'assets/no_image.png',
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.high,
+                    )
+                   /* Image.network(
+                     '',
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.high,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return Image.asset(
+                          'assets/no_image.png',
+                          fit: BoxFit.fill,
+                          filterQuality: FilterQuality.high,
+                        );
+                      },
+                    ),*/
                   ),
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'published At : ',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w300),
-                      ),
-                      Text(
-                        data.publishedAt.toString().substring(0, 10),
-                        style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                  AppSpace.spaceH4,
-                  Text(
-                    data.title ?? '',
-                    maxLines: 2,
-                    overflow: TextOverflow.clip,
-                    style: const TextStyle(fontWeight: FontWeight.w400),
-                  ),
-                ],
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    AppSpace.spaceH4,
+                    Text(
+                      data.itemName ?? '',
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(fontWeight: FontWeight.w400),
+                    ),
+                    AppSpace.spaceH4,
+                    Text(
+                      data.itemPrice.toString() ?? '',
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(fontWeight: FontWeight.w400),
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'published At : ',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w300),
+                        ),
+                        Text(
+                          data.updatedAT.toString().substring(0, 10),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
+            ),
+            Expanded(
+
+              child:
+             CheckboxListTile(
+               title: Text(''), value: false, onChanged: (bool? value) {  },)
             )
           ],
         ),
       ),
     );
   }
-
 
 }

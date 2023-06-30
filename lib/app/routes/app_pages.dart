@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/authentication/bindings/authentication_binding.dart';
 import '../modules/authentication/views/authentication_view.dart';
+import '../modules/bazarItem/bindings/bazar_item_binding.dart';
+import '../modules/bazarItem/views/bazar_item_view.dart';
 import '../modules/bookmarkslist/bindings/bookmarkslist_binding.dart';
 import '../modules/bookmarkslist/views/bookmarkslist_view.dart';
 import '../modules/category/bindings/category_binding.dart';
@@ -10,6 +12,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/news_details/bindings/news_details_binding.dart';
 import '../modules/news_details/views/news_details_view.dart';
+import '../modules/subCategory/bindings/sub_category_binding.dart';
+import '../modules/subCategory/views/sub_category_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +47,16 @@ class AppPages {
       name: _Paths.CATEGORY,
       page: () => const CategoryView(),
       binding: CategoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUB_CATEGORY,
+      page: () => const SubCategoryView(),
+      binding: SubCategoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.BAZAR_ITEM,
+      page: () => const BazarItemView(),
+      binding: BazarItemBinding(),
     ),
   ];
 }
