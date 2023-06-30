@@ -1,11 +1,11 @@
+
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:newspaper_app/app/data/models/is_item_model.dart';
-import 'package:newspaper_app/app/data/models/item_model.dart';
-import 'package:newspaper_app/app/data/models/newspaper_model.dart';
+
 import 'package:newspaper_app/app/data/utils/app_space.dart';
-import 'package:newspaper_app/app/data/utils/dbhelper.dart';
 import 'package:newspaper_app/app/data/utils/shimmer_effect.dart';
 import 'package:newspaper_app/app/routes/app_pages.dart';
 
@@ -48,7 +48,7 @@ class HomeView extends GetView<HomeController> {
               child: ShimmerLoading.vListViewLoading(),
             );
           } else {
-            if (controller.dummyData.isEmpty) {
+            if (controller.item.isEmpty) {
               return const Center(child: Text('No Data Found!'));
             } else {
               return ListView.builder(
@@ -56,16 +56,32 @@ class HomeView extends GetView<HomeController> {
                 itemBuilder: (BuildContext context, int index) {
                   ItemModel data = controller.item[index];
                   print('data>>>111?? ${data.toJson()}');
-                  return _bazarCardWidget(data, index);
+                  print('data>>>Name?? ${data.itemName.toString()}');
+                  return _bazarCardWidget(context,data, index);
                 },
               );
             }
           }
-        }));
+        }),
+
+
+      bottomNavigationBar: Container(
+        height: 50,
+        alignment: Alignment.center,
+        child:  Text('View All ',style: TextStyle(
+            fontSize: 20,
+            color: Colors.white),),
+
+        margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+        width: double.infinity,
+        color: Colors.green,),
+
+    );
   }
 
-  _bazarCardWidget(ItemModel data, int index) {
-    print('data $data');
+  _bazarCardWidget(BuildContext context, ItemModel data, int index) {
+
     return InkWell(
       onTap: () {
         Get.toNamed(Routes.NEWS_DETAILS, arguments: data);
@@ -162,13 +178,12 @@ class HomeView extends GetView<HomeController> {
               () => Expanded(
                 child: CheckboxListTile(
                   title: const Text(''),
-                  value: false,
+                  value: controller.isItem.value,
                   onChanged: (bool? value) {
-                   // controller.dummyData1[index]=value;
+                    _displayDialog(context,data);
+
                     controller.isItem.value=value!;
 
-                    print('value $value');
-                    //print('data.isItem ${data.isItem}');
                   },
                 ),
               ),
@@ -178,4 +193,29 @@ class HomeView extends GetView<HomeController> {
       ),
     );
   }
+
+
+    _displayDialog(BuildContext context, ItemModel data) async {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title:  Text('Item  : ${data.itemName}'),
+
+              content: TextField(
+                controller: controller.qtyController,
+                decoration: const InputDecoration(hintText: "Qty"),
+              ),
+              actions: <Widget>[
+                 ElevatedButton(
+                  child: const  Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    }
+
 }

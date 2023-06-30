@@ -34,7 +34,7 @@ class ItemModel {
   String? itemName;
   String? itemCategoryName;
   String? itemSubCategoryName;
-  int? itemPrice;
+  dynamic itemPrice;
   String? updatedAT;
   String? updatePerson;
 

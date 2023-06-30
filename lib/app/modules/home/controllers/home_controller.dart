@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:newspaper_app/app/data/models/is_item_model.dart';
@@ -12,12 +13,14 @@ import '../../../data/models/item_model.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
+  TextEditingController qtyController = TextEditingController();
   final count = 0.obs;
  // List dummyData = [].obs;
 
   List<NewsPaperModel> newsDataList = [];
   List<IsItemModel> dummyData = [];
   List<ItemModel> item = [];
+  List test = [];
 
 
   final isLoadingData = false.obs;
@@ -65,8 +68,8 @@ class HomeController extends GetxController {
 
       for(var data in value){
         item.add(ItemModel.fromJson(data));
-        // dummyData.add(IsItemModel.fromJson(data));
       }
+
       isLoadingData.value = true;
 
     });
