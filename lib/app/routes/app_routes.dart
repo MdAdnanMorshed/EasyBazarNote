@@ -10,6 +10,7 @@ abstract class Routes {
   static const CATEGORY = _Paths.CATEGORY;
   static const SUB_CATEGORY = _Paths.SUB_CATEGORY;
   static const BAZAR_ITEM = _Paths.BAZAR_ITEM;
+  static const BAZAR_ITEMS = _Paths.BAZAR_ITEMS;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const CATEGORY = '/category';
   static const SUB_CATEGORY = '/sub-category';
   static const BAZAR_ITEM = '/bazar-item';
+  static const BAZAR_ITEMS = '/bazar-items';
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -16,72 +14,76 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white.withOpacity(0.9),
-        appBar: AppBar(
-          title: const Text('Easy Bazar note App'),
-          centerTitle: true,
-          actions: [
-            InkWell(
-              onTap: () {
-                print('HomeView.build Logout');
-                Get.offNamedUntil(Routes.AUTHENTICATION, (route) => false);
-              },
-              child: const Icon(Icons.logout),
+      backgroundColor: Colors.white.withOpacity(0.9),
+      appBar: AppBar(
+        title: const Text('Easy Bazar note App'),
+        centerTitle: true,
+        actions: [
+          InkWell(
+            onTap: () {
+              print('HomeView.build Logout');
+              Get.offNamedUntil(Routes.AUTHENTICATION, (route) => false);
+            },
+            child: const Icon(Icons.logout),
+          ),
+          AppSpace.spaceW12,
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.BAZAR_ITEM);
+            },
+            child: const Icon(
+              Icons.add,
+              color: Colors.green,
+              size: 25,
             ),
-            AppSpace.spaceW12,
-            InkWell(
-              onTap: () {
-                Get.toNamed(Routes.BAZAR_ITEM);
-              },
-              child: const Icon(
-                Icons.add,
-                color: Colors.green,
-                size: 25,
-              ),
-            ),
-            AppSpace.spaceW12,
-          ],
-        ),
-        body: Obx(() {
-          if (!controller.isLoadingData.value) {
-            return Center(
-              child: ShimmerLoading.vListViewLoading(),
-            );
+          ),
+          AppSpace.spaceW12,
+        ],
+      ),
+      body: Obx(() {
+        if (!controller.isLoadingData.value) {
+          return Center(
+            child: ShimmerLoading.vListViewLoading(),
+          );
+        } else {
+          if (controller.item.isEmpty) {
+            return const Center(child: Text('No Data Found!'));
           } else {
-            if (controller.item.isEmpty) {
-              return const Center(child: Text('No Data Found!'));
-            } else {
-              return ListView.builder(
-                itemCount: controller.item.length,
-                itemBuilder: (BuildContext context, int index) {
-                  ItemModel data = controller.item[index];
-                  print('data>>>111?? ${data.toJson()}');
-                  print('data>>>Name?? ${data.itemName.toString()}');
-                  return _bazarCardWidget(context,data, index);
-                },
-              );
-            }
+            return ListView.builder(
+              itemCount: controller.item.length,
+              itemBuilder: (BuildContext context, int index) {
+                ItemModel data = controller.item[index];
+                print('data>>>111?? ${data.toJson()}');
+                print('data>>>Name?? ${data.itemName.toString()}');
+                return _bazarCardWidget(context, data, index);
+              },
+            );
           }
-        }),
-
-
-      bottomNavigationBar: Container(
-        height: 50,
-        alignment: Alignment.center,
-        child:  Text('View All ',style: TextStyle(
-            fontSize: 20,
-            color: Colors.white),),
-
-        margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-        width: double.infinity,
-        color: Colors.green,),
-
+        }
+      }),
+      bottomNavigationBar:
+      InkWell(
+        onTap: () {
+          Get.toNamed(Routes.BAZAR_ITEMS,arguments: controller.selectItems);
+        },
+        child: Container(
+          height: 50,
+          alignment: Alignment.center,
+          child: Text(
+            'View All ',
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          width: double.infinity,
+          color: Colors.green,
+        ),
+      ),
     );
   }
 
   _bazarCardWidget(BuildContext context, ItemModel data, int index) {
-
+    String? countryname;
     return InkWell(
       onTap: () {
         Get.toNamed(Routes.NEWS_DETAILS, arguments: data);
@@ -180,10 +182,10 @@ class HomeView extends GetView<HomeController> {
                   title: const Text(''),
                   value: controller.isItem.value,
                   onChanged: (bool? value) {
-                    _displayDialog(context,data);
+                    controller.selectItems.add(data);
+                  //  _displayDialog(context, data);
 
-                    controller.isItem.value=value!;
-
+                    controller.isItem.value = value!;
                   },
                 ),
               ),
@@ -194,28 +196,26 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  _displayDialog(BuildContext context, ItemModel data) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Item  : ${data.itemName}'),
+            content: TextField(
+              controller: controller.qtyController,
+              decoration: const InputDecoration(hintText: "Qty"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('OK'),
+                onPressed: () {
 
-    _displayDialog(BuildContext context, ItemModel data) async {
-      return showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title:  Text('Item  : ${data.itemName}'),
-
-              content: TextField(
-                controller: controller.qtyController,
-                decoration: const InputDecoration(hintText: "Qty"),
-              ),
-              actions: <Widget>[
-                 ElevatedButton(
-                  child: const  Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-    }
-
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
 }

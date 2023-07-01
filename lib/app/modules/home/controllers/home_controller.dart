@@ -20,7 +20,8 @@ class HomeController extends GetxController {
   List<NewsPaperModel> newsDataList = [];
   List<IsItemModel> dummyData = [];
   List<ItemModel> item = [];
-  List test = [];
+  List<ItemModel>  selectItems = [];
+
 
 
   final isLoadingData = false.obs;
