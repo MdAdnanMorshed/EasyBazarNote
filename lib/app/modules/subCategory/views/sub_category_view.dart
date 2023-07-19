@@ -15,7 +15,7 @@ class SubCategoryView extends GetView<SubCategoryController> {
       ),
       body: const Center(
         child: Text(
-          'SubCategoryView is working',
+          'SubCategoryView is working ',
           style: TextStyle(fontSize: 20),
         ),
       ),
