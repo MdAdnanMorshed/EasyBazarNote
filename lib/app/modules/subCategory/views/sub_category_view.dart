@@ -10,7 +10,8 @@ class SubCategoryView extends GetView<SubCategoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SubCategoryView'),
+        title: const Text('SubCategoryView')
+        ,
         centerTitle: true,
       ),
       body: const Center(
