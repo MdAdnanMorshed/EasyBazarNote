@@ -1,5 +1,5 @@
 name: newspaper_app
-version: 1.0.0+1
+version: 1.0.1+2
 publish_to: none
 description: A new Flutter project.
 environment: 
@@ -19,13 +19,24 @@ dependencies:
   progress_dialog_null_safe: ^1.0.7
   internet_connection_checker: ^1.0.0+1
   bluetooth_print: ^4.3.0
+
   flutter: 
     sdk: flutter
 
+
+
+
 dev_dependencies: 
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
   flutter_test: 
     sdk: flutter
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter: 
   uses-material-design: true
