@@ -1,4 +1,4 @@
-package com.adnan.news_app.newspaper_app;
+package com.adnan.easybazarnote;
 
 import io.flutter.embedding.android.FlutterActivity;
 

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.adnan.news_app.newspaper_app">
+    package="com.adnan.easybazarnote">
    <application
         android:label="EasyBazarNote App"
         android:name="${applicationName}"
